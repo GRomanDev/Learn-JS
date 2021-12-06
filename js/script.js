@@ -14,6 +14,10 @@
 
 'use strict';
 
+const promoAdv = document.querySelector('.promo__adv');
+
+promoAdv.remove();
+
 const movieDB = {
     movies: [
         "Логан",
@@ -23,4 +27,3 @@ const movieDB = {
         "Скотт Пилигрим против..."
     ]
 };
-
