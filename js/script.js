@@ -49,24 +49,38 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(movieDB.movies);
     });
 
-    promoAdv.forEach(item => {
-        item.remove();
-    });
+    const removeAdv = function () {
+        promoAdv.forEach(item => {
+            item.remove();
+        });
+    };
 
-    genre.textContent = 'драма';
+    const changes = function () {
+        genre.textContent = 'драма';
 
-    poster.style.backgroundImage = 'url("img/bg.jpg")';
+        poster.style.backgroundImage = 'url("img/bg.jpg")';
+    };
 
-    movieList.innerHTML = '';
+    const createMovieList = function () {
+        movieList.innerHTML = '';
 
-    movieDB.movies.sort();
+        arrSort(movieDB.movies);
 
-    movieDB.movies.forEach((film, i) => {
-        movieList.innerHTML += `
+        movieDB.movies.forEach((film, i) => {
+            movieList.innerHTML += `
     <li class="promo__interactive-item">${i + 1} ${film}
         <div class="delete"></div> 
     </li>
     `;
-    });
+        });
+    };
 
+    const arrSort = function (arr) {
+        arr.sort();
+    };
+
+    removeAdv();
+    changes();
+    arrSort(movieDB.movies);
+    createMovieList();
 });
