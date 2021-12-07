@@ -37,17 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
         addInput = addForm.querySelector('.adding__input'),
         checkbox = addForm.querySelector('[type="checkbox"]');
 
-    addForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    const addNewFilm = function () {
+        addForm.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        const newFilm = addInput.value,
-            favourite = checkbox.checked;
+            const newFilm = addInput.value,
+                favourite = checkbox.checked;
 
-        movieDB.movies.push(newFilm);
-        movieDB.movies.sort();
+            movieDB.movies.push(newFilm);
+            arrSort(movieDB.movies);
+            e.target.reset();
 
-        console.log(movieDB.movies);
-    });
+            createMovieList();
+
+            console.log(movieDB.movies);
+        });
+    };
+
 
     const removeAdv = function () {
         promoAdv.forEach(item => {
@@ -83,4 +89,5 @@ document.addEventListener('DOMContentLoaded', () => {
     changes();
     arrSort(movieDB.movies);
     createMovieList();
+    addNewFilm();
 });
