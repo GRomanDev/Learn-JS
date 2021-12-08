@@ -41,19 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
         addForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const newFilm = addInput.value,
+            let newFilm = addInput.value,
                 favourite = checkbox.checked;
 
-            movieDB.movies.push(newFilm);
-            arrSort(movieDB.movies);
-            e.target.reset();
+            if (newFilm) {
 
-            createMovieList();
+                if (newFilm.length > 21) {
+                    newFilm = `${newFilm.substring(0, 22)}...`;
+                }
 
-            console.log(movieDB.movies);
+                if (favourite) {
+                    console.log('"Добавляем любимый фильм"');
+                }
+
+                movieDB.movies.push(newFilm);
+                arrSort(movieDB.movies);
+                e.target.reset();
+
+                createMovieList(movieDB.movies, movieList);
+            }
         });
     };
-
 
     const removeAdv = function () {
         promoAdv.forEach(item => {
@@ -61,33 +69,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const changes = function () {
+    const makeChanges = function () {
         genre.textContent = 'драма';
 
         poster.style.backgroundImage = 'url("img/bg.jpg")';
-    };
-
-    const createMovieList = function () {
-        movieList.innerHTML = '';
-
-        arrSort(movieDB.movies);
-
-        movieDB.movies.forEach((film, i) => {
-            movieList.innerHTML += `
-    <li class="promo__interactive-item">${i + 1} ${film}
-        <div class="delete"></div> 
-    </li>
-    `;
-        });
     };
 
     const arrSort = function (arr) {
         arr.sort();
     };
 
+    const createMovieList = function (films, parent) {
+        parent.innerHTML = '';
+
+        arrSort(movieDB.movies);
+
+        films.forEach((film, i) => {
+            parent.innerHTML += `
+                <li class="promo__interactive-item">${i + 1} ${film}
+                    <div class="delete"></div> 
+                </li>
+            `;
+        });
+
+        document.querySelectorAll('.delete').forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.remove();
+                movieDB.movies.splice(i, 1);
+
+                createMovieList(movieDB.movies, movieList);
+            });
+        });
+    };
+
     removeAdv();
-    changes();
-    arrSort(movieDB.movies);
-    createMovieList();
+    makeChanges();
+    createMovieList(movieDB.movies, movieList);
     addNewFilm();
 });
