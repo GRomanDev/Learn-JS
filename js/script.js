@@ -1,18 +1,32 @@
-function myAnimation() {
-    const elem = document.querySelector('.box');
-    let pos = 0;
+'use strict';
 
-    const id = setInterval(frame, 10);
+class Muscle {
+    constructor(name, origin, insertion) {
+        this.name = name;
+        this._origin = origin;
+        this._insertion = insertion;
+    }
 
-    function frame() {
-        if (pos == 300) {
-            clearInterval(id);
-        } else {
-            pos++;
-            elem.style.left = pos + 'px';
-            elem.style.top = pos + 'px';
-        }
+    showData = () => {
+        console.log(`мышца ${this.name} имеет начало: ${this._origin}  и прикрепление: ${this._insertion}`);
+    }
+
+    get origin() {
+        return this._origin;
+    }
+
+    set origin(origin) {
+        this._origin = origin;
     }
 }
 
-document.querySelector('.btn').addEventListener('click', myAnimation);
+const gastrocnemius = new Muscle('gastrocnemius', 'femur', 'tibia');
+
+gastrocnemius.showData();
+
+gastrocnemius.origin = 'os femur';
+
+gastrocnemius.insertion = 'os tibia';
+
+console.log(gastrocnemius.insertion);
+gastrocnemius.showData();
